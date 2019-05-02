@@ -7,6 +7,7 @@ cmake/GIT_COMMIT
 squashfs-root/
 *.qm
 resources/l10n/*
+*~
 
 .vscode/*
 !.vscode/settings.json

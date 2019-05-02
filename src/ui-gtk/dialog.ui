@@ -4,7 +4,7 @@
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkApplicationWindow" id="appwindow-dialog">
     <property name="can_focus">False</property>
-    <property name="window_position">center-always</property>
+    <property name="window_position">center</property>
     <property name="type_hint">dialog</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="dialog-headerbar">
@@ -32,12 +32,14 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="halign">center</property>
                 <property name="action_name">win.run</property>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
                 <property name="position">0</property>
+                <property name="non_homogeneous">True</property>
               </packing>
             </child>
             <child>
@@ -46,15 +48,17 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="halign">center</property>
                 <property name="action_name">win.integrate</property>
                 <style>
                   <class name="suggested-action"/>
                 </style>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
                 <property name="position">1</property>
+                <property name="non_homogeneous">True</property>
               </packing>
             </child>
           </object>
@@ -108,6 +112,7 @@
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
                         <property name="valign">baseline</property>
+                        <property name="margin_right">3</property>
                         <property name="label" translatable="yes">[name]</property>
                         <property name="single_line_mode">True</property>
                         <attributes>
@@ -115,7 +120,7 @@
                         </attributes>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
+                        <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
@@ -199,10 +204,12 @@
                 </child>
                 <child>
                   <object class="GtkCheckButton">
+                    <property name="width_request">100</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="action_name">win.toggle_autointegration</property>
+                    <property name="resize_mode">queue</property>
+                    <property name="action_name">win.autointegrate</property>
                     <property name="draw_indicator">True</property>
                     <child>
                       <object class="GtkLabel">
