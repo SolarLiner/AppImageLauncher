@@ -45,7 +45,8 @@ add_subdirectory(shared)
 add_subdirectory(daemon)
 
 # main application and helper tools
-add_subdirectory(ui)
+add_subdirectory(ui-qt)
+add_subdirectory(ui-gtk)
 
 # FUSE filesystem AppImageLauncherFS
 add_subdirectory(fusefs)
