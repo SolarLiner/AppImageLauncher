@@ -1,0 +1,5 @@
+{
+  "cmake.generator": "Unix Makefiles",
+  "cmake.installPrefix": "${workspaceRoot}/.vscode/install",
+  "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools"
+}
