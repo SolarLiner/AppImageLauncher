@@ -33,11 +33,11 @@ FUNCTION(GLIB_COMPILE_RESOURCES output)
   FOREACH(src ${ARGS_SOURCE} ${ARGS_UNPARSED_ARGUMENTS})
     SET(in_file "${CMAKE_CURRENT_SOURCE_DIR}/${src}")
     GET_FILENAME_COMPONENT(WORKING_DIR ${in_file} PATH)
-    STRING(REPLACE ".xml" ".c" src ${src})
-    SET(out_file "${DIRECTORY}/${src}")
+    STRING(REPLACE ".xml" ".c" src_c ${src})
+    SET(out_file "${DIRECTORY}/${src_c}")
     GET_FILENAME_COMPONENT(OUPUT_DIR ${out_file} PATH)
     FILE(MAKE_DIRECTORY ${OUPUT_DIR})
-    LIST(APPEND out_files "${DIRECTORY}/${src}")
+    LIST(APPEND out_files "${DIRECTORY}/${src_c}")
 
     #FIXME implicit depends currently not working
     EXECUTE_PROCESS(
