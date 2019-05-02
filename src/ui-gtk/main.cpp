@@ -1,14 +1,11 @@
+#include "app.hpp"
+#include "dialog.hpp"
 #include <gtkmm.h>
 
-int main(int argc, char **argv) {
-  auto app =
-      Gtk::Application::create(argc, argv, "org.appimage.AppImageLauncher");
-  Gtk::Window win;
-  win.set_default_size(200, 200);
-  Gtk::Label label;
-  label.set_text("Hello!");
-  label.show();
-  win.add(label);
+void on_hide_window(IntegrationDialog *diag) { delete diag; }
 
-  return app->run(win);
+int main(int argc, char **argv) {
+    auto app = IntegrationApplication::create();
+
+    return app->run(argc, argv);
 }
