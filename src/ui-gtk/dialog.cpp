@@ -16,17 +16,20 @@ void IntegrationDialog::on_startup() {
         sigc::mem_fun(*this, &IntegrationDialog::on_autointegrate_changed));
 }
 
-RefPtr<IntegrationDialog> IntegrationDialog::create(INTEGRATION_STATE state) {
+IntegrationDialog *IntegrationDialog::create(INTEGRATION_STATE state) {
     auto builder = Builder::create_from_resource("/com/github/TheAssassin/AppImageLauncher/dialog.ui");
     IntegrationDialog *dialog = nullptr;
     builder->get_widget_derived("appwindow-dialog", dialog, state);
 
-    return RefPtr<IntegrationDialog>(dialog);
+    return dialog;
 }
 
-void IntegrationDialog::on_cancel() { std::cout << "Action: cancel" << std::endl; }
-void IntegrationDialog::on_run() { std::cout << "Action: cancel" << std::endl; }
-void IntegrationDialog::on_integrate() { std::cout << "Action: cancel" << std::endl; }
+void IntegrationDialog::on_cancel() {
+    std::cout << "Action: cancel" << std::endl;
+    hide();
+}
+void IntegrationDialog::on_run() { std::cout << "Action: run" << std::endl; }
+void IntegrationDialog::on_integrate() { std::cout << "Action: integrate" << std::endl; }
 void IntegrationDialog::on_autointegrate_changed(bool value) {
     std::cout << "Action: Auto-integrate: " << value << std::endl;
 }

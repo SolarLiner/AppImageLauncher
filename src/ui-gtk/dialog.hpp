@@ -11,7 +11,7 @@ class IntegrationDialog : public ApplicationWindow {
 public:
     IntegrationDialog(BaseObjectType *dialog, RefPtr<Builder> &builder, INTEGRATION_STATE state);
     // virtual ~IntegrationDialog();
-    static RefPtr<IntegrationDialog> create(INTEGRATION_STATE state);
+    static IntegrationDialog *create(INTEGRATION_STATE state);
 
     void ask_integration(RefPtr<File> file);
 

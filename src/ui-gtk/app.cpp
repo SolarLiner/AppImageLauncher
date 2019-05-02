@@ -1,25 +1,25 @@
 #include "app.hpp"
 
 IntegrationApplication::IntegrationApplication()
-    : Gtk::Application("org.appimage.AppImageLauncher", Gio::APPLICATION_HANDLES_OPEN), m_state(ISTATE_INTEGRATE) {}
+    : Gtk::Application("org.appimage.AppImageLauncher", Gio::APPLICATION_HANDLES_OPEN), m_state(ISTATE_INTEGRATE) {
+    set_application_name("AppImage Integration dialog");
+}
 
 RefPtr<IntegrationApplication> IntegrationApplication::create() {
     return RefPtr<IntegrationApplication>(new IntegrationApplication());
 }
 
-RefPtr<IntegrationDialog> IntegrationApplication::create_dialog() {
-    auto builder = Builder::create_from_file("dialog.ui");
-    IntegrationDialog *dialog = nullptr;
-    builder->get_widget_derived("appwindow-dialog", dialog, m_state);
-    dialog->signal_hide().connect(
-        sigc::bind<Window *>(sigc::mem_fun(*this, &IntegrationApplication::on_hide_window), dialog));
-
+IntegrationDialog *IntegrationApplication::create_dialog() {
+    auto dialog = IntegrationDialog::create(m_state);
     add_window(*dialog);
 
-    return RefPtr<IntegrationDialog>(dialog);
+    return dialog;
 }
 
-void IntegrationApplication::on_activate() { auto diag = create_dialog(); }
+void IntegrationApplication::on_activate() {
+    std::cout << "IntegrationApplication activated" << std::endl;
+    auto diag = create_dialog();
+}
 
 void IntegrationApplication::on_open(const Gio::Application::type_vec_files &files, const Glib::ustring &hint) {
     IntegrationDialog *diag = nullptr;
@@ -35,7 +35,7 @@ void IntegrationApplication::on_open(const Gio::Application::type_vec_files &fil
         if (windows.size() > 0)
             diag = dynamic_cast<IntegrationDialog *>(windows[0]);
         else
-            diag = create_dialog().operator->();
+            diag = create_dialog();
         diag->ask_integration(file);
     }
 

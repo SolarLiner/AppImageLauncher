@@ -21,7 +21,7 @@ protected:
     void on_open(const Gio::Application::type_vec_files &files, const Glib::ustring &hint) override;
 
 private:
-    RefPtr<IntegrationDialog> create_dialog();
+    IntegrationDialog *create_dialog();
     void on_hide_window(Window *win);
 
     INTEGRATION_STATE m_state;
