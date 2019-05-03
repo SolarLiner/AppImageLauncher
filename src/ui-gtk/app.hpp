@@ -18,11 +18,14 @@ public:
 protected:
     IntegrationApplication();
     void on_activate() override;
+    void on_cmd(RefPtr<ApplicationCommandLine> &cmd);
     void on_open(const Gio::Application::type_vec_files &files, const Glib::ustring &hint) override;
 
 private:
     IntegrationDialog *create_dialog();
     void on_hide_window(Window *win);
-
     INTEGRATION_STATE m_state;
+
+    int m_argc;
+    char** m_argv;
 };
