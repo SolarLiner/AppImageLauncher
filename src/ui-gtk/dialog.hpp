@@ -1,6 +1,8 @@
 #pragma once
+#include <iostream>
 #include <gtkmm.h>
-
+#include "runappimage.hpp"
+#include "../shared/shared.h"
 using namespace Gio;
 using namespace Glib;
 using namespace Gtk;
@@ -13,7 +15,7 @@ public:
     // virtual ~IntegrationDialog();
     static IntegrationDialog *create(INTEGRATION_STATE state);
 
-    void ask_integration(RefPtr<File> file);
+    int ask_integration(RefPtr<File> file, int argc, char** argv);
 
 protected:
     void on_startup();
@@ -28,5 +30,11 @@ protected:
     RefPtr<SimpleAction> action_autointegrate;
 
 private:
+    void build_ui(RefPtr<Builder> &builder);
     INTEGRATION_STATE m_state;
+    HeaderBar *m_header;
+    Image *m_appicon;
+    Label *m_appname;
+    Label *m_appversion;
+    Label *m_description;
 };

@@ -1,9 +1,16 @@
 #include "dialog.hpp"
-#include <iostream>
 
 IntegrationDialog::IntegrationDialog(BaseObjectType *dialog, RefPtr<Builder> &builder, INTEGRATION_STATE state)
     : ApplicationWindow(dialog), m_state(state) {
     on_startup();
+    build_ui(builder);
+}
+
+void IntegrationDialog::build_ui(RefPtr<Builder> &builder) {
+    builder->get_widget("dialog-headerbar", m_header);
+    builder->get_widget("img-appicon", m_appicon);
+    builder->get_widget("label-appname", m_appname);
+    builder->get_widget("label-appversion", m_appversion);
 }
 
 void IntegrationDialog::on_startup() {
@@ -34,6 +41,31 @@ void IntegrationDialog::on_autointegrate_changed(bool value) {
     std::cout << "Action: Auto-integrate: " << value << std::endl;
 }
 
-void IntegrationDialog::ask_integration(RefPtr<File> file) {
-    std::cout << "Doing an integration on " << file->get_path() << std::endl;
+int IntegrationDialog::ask_integration(RefPtr<File> file, int argc, char** argv) {
+    std::string appimage_path = file->get_path();
+    std::cout << "Doing an integration on " << appimage_path << std::endl;
+    if(getenv("APPIMAGELAUNCHER_DISABLE") != nullptr) {
+        return run_appimage(file, argc, argv);
+    }
+
+    const auto type = appimage_get_type(appimage_path.c_str(), false);
+    if(type<=0 || type > 2) {
+        std::ostringstream msg;
+        msg << "Not an AppImage: " << appimage_path;
+        auto diag = new MessageDialog(msg.str(), false, MessageType::MESSAGE_ERROR);
+        diag->run();
+        return 1;
+    }
+
+    if(type==2) {
+        for(int i = 0;i<argc; i++) {
+            std::string arg(argv[i]);
+            std::string prefix("--appimage-");
+            if(arg.find(prefix) == 0) {
+                if(arg == prefix+"mount" || arg == prefix + "extract" || arg==prefix + "updateinformation") {
+                    return run_appimage(file, argc, argv);
+                }
+            }
+        }
+    }
 }
